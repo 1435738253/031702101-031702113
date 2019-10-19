@@ -1,0 +1,21 @@
+.normal {
+            font-size: 30px;
+            color: black;
+        }
+
+            .normal:hover {
+                font-size: 35px;
+                color: blueviolet;
+                transition-duration: 200ms;
+                transition-delay: 200ms;
+            }
+
+        .backgraph {
+            background-image: url(123.png);
+            background-repeat: repeat;
+        }
+
+        .textbox {
+            opacity: 0.5;
+            border: 0;
+        }
