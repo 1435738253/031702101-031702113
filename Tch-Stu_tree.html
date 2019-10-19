@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -22,13 +22,13 @@
         }
         function DisplayList(ListArr) {                      //输出学生列表
             var i = 0;
-            var StdOut_Front = "<a>";        //输出特效在这里改，如果你懂的话
+            var StdOut_Front = "<a class='stu'>";        //输出特效在这里改，如果你懂的话
             //var StdOut_Mid = ") '>";
             var StdOut_Back = "</a>";
             var str = "";
             while (i < ListArr.length) {
                 str += StdOut_Front + ListArr[i++].name + StdOut_Back;
-                if (i != ListArr.length) str += ",";                     //输出学生姓名，使用‘，’隔开
+                if (i != ListArr.length) str += "，";                     //输出学生姓名，使用‘，’隔开
             }
             str += "<br>";
             return str;             //需要打印的信息都存在str字符串里
@@ -40,7 +40,7 @@
         }
         function DisplayTag(a, i) {                                     //显示标签表
             ptr_obj = a;
-            var StdOut_Front = "<a class ='normal' onclick='Click_Tag(";          //特效就像这样 用class加进去，改掉所用的class输出就会变化，这里只会改到标签
+            var StdOut_Front = "<a class ='Tag' onclick='Click_Tag(";          //特效就像这样 用class加进去，改掉所用的class输出就会变化，这里只会改到标签
             var StdOut_Mid = ") '>";
             var StdOut_Back = "</a>";
             var str = "";
@@ -65,7 +65,7 @@
         function DisplayTable(arr) {                        //输出导师表     即树
             var i = 0;
             ptr_obj = arr;
-            var StdOut_Front = "<a class ='normal' onclick='Click_teacher(";            //特效在class里改，这里只会改到导师
+            var StdOut_Front = "<a class ='tch' onclick='Click_teacher(";            //特效在class里改，这里只会改到导师
             var StdOut_Mid = ") '>";
             var StdOut_Back = "</a>";
             var str = "";
