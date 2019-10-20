@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -133,6 +132,9 @@
                     teachername = "";               //找到导师名后新建导师对象
                     a.push(t);                      //放入树中
                     while (str[i] != undefined) {
+                        if (check_tch(str, i)) {
+                            --i; break;
+                        }
                         var tg = check_tag(str, i);
                         if (tg != false) {
                             t.studentTag.push(tg);  //再将导师后面的标签也放入该导师的student.Tag中
