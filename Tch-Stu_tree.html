@@ -1,57 +1,45 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>MyTree</title>
-    <style type="text/css">
-        .normal {
-            font-size: 30px;
-            color: black;
-        }
-        .normal:hover {
-            font-size: 35px;
-            color: blueviolet;
-            transition-duration: 200ms;
-            transition-delay: 200ms;
-        }
-    </style>
-    <script type="text/javascript" >
-        
-        function Student(name="student") {                  //Student构建函数-学生
+    <title>MasterTree</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+    <script type="text/javascript">
+
+        function Student(name = "student") {                  //Student构建函数-学生
             this.name = name;
         }
-        function Tag(name="tag") {                          //Tag构建函数-标签
+        function Tag(name = "tag") {                          //Tag构建函数-标签
             this.name = name;
             this.list = new Array();
             this.show = false;
         }
-        function Teacher(name="teacher") {                  //Teacher构建函数-导师
+        function Teacher(name = "teacher") {                  //Teacher构建函数-导师
             this.name = name;
             this.studentTag = new Array();
             this.show = false;
         }
         function DisplayList(ListArr) {                      //输出学生列表
             var i = 0;
-            var StdOut_Front = "<a>";        //输出特效在这里改，如果你懂的话
+            var StdOut_Front = "<a class='stu'>";        //输出特效在这里改，如果你懂的话
             //var StdOut_Mid = ") '>";
             var StdOut_Back = "</a>";
             var str = "";
             while (i < ListArr.length) {
                 str += StdOut_Front + ListArr[i++].name + StdOut_Back;
-                if (i != ListArr.length) str += ",";                     //输出学生姓名，使用‘，’隔开
+                if (i != ListArr.length) str += "，";                     //输出学生姓名，使用‘，’隔开
             }
             str += "<br>";
             return str;             //需要打印的信息都存在str字符串里
         }
-        function Click_Tag(a,i,j) {                 //鼠标点到了标签就修改标签展开状态
+        function Click_Tag(a, i, j) {                 //鼠标点到了标签就修改标签展开状态
             a[i].studentTag[j].show = !a[i].studentTag[j].show;
             ptr_obj = a;            //改变a表的状态并输出a表  //这里的a表就是树
             DisplayTable(a);
         }
         function DisplayTag(a, i) {                                     //显示标签表
             ptr_obj = a;
-            var StdOut_Front = "<a class ='normal' onclick='Click_Tag(";          //特效就像这样 用class加进去，改掉所用的class输出就会变化，这里只会改到标签
+            var StdOut_Front = "<a class ='Tag' onclick='Click_Tag(";          //特效就像这样 用class加进去，改掉所用的class输出就会变化，这里只会改到标签
             var StdOut_Mid = ") '>";
             var StdOut_Back = "</a>";
             var str = "";
@@ -76,10 +64,10 @@
         function DisplayTable(arr) {                        //输出导师表     即树
             var i = 0;
             ptr_obj = arr;
-            var StdOut_Front = "<a class ='normal' onclick='Click_teacher(";            //特效在class里改，这里只会改到导师
-            var StdOut_Mid=") '>";
+            var StdOut_Front = "<a class ='tch' onclick='Click_teacher(";            //特效在class里改，这里只会改到导师
+            var StdOut_Mid = ") '>";
             var StdOut_Back = "</a>";
-            var str="";
+            var str = "";
             while (i < arr.length) {
                 //document.write(arr.name);
                 str += StdOut_Front + JSON.stringify(arr) + "," + i + StdOut_Mid + arr[i].name + StdOut_Back;
@@ -122,7 +110,7 @@
                     tg.list.push(std);             //将学生名放入标签表中
                     stname = "";
                 }
-                if (str[i] == "\n"|| str[i] == undefined) break;
+                if (str[i] == "\n" || str[i] == undefined) break;
                 i++;
             }
             return tg; //返回建好的标签
@@ -131,7 +119,7 @@
             var str = document.getElementById("inputbox").value;
             document.getElementById("inputbox").value = ""; //获取文本框内容后清空
             var i = 0;
-            var teachername="";
+            var teachername = "";
             var line_break = '\n';
             while (str[i] != undefined) {
                 if (check_tch(str, i)) {            //找“导师：”
@@ -144,6 +132,9 @@
                     teachername = "";               //找到导师名后新建导师对象
                     a.push(t);                      //放入树中
                     while (str[i] != undefined) {
+                        if (check_tch(str, i)) {
+                            --i; break;
+                        }
                         var tg = check_tag(str, i);
                         if (tg != false) {
                             t.studentTag.push(tg);  //再将导师后面的标签也放入该导师的student.Tag中
@@ -156,36 +147,36 @@
                 }
                 i++;
             }
-            DisplayTable(a);    
+            DisplayTable(a);
         }
-           
-            /*
-             *读取文本框内容
-             *导师：张三
-             *2016级博士生：天一、王二、吴五
-             *2015级硕士生：李四、王五、许六
-             *2016级硕士生：刘一、李二、李三
-             *2017级本科生：刘六、琪七、司四
-             * 
-             * 处理字符串
-             * 将'：'前的信息作为标签名(即首行第一个信息)
-             * '、'或者'\0'前为姓名（第一个信息之后的信息）
-             * 
-             * 
-             * 
-             */
-        
-        
+
+        /*
+         *读取文本框内容
+         *导师：张三
+         *2016级博士生：天一、王二、吴五
+         *2015级硕士生：李四、王五、许六
+         *2016级硕士生：刘一、李二、李三
+         *2017级本科生：刘六、琪七、司四
+         *
+         * 处理字符串
+         * 将'：'前的信息作为标签名(即首行第一个信息)
+         * '、'或者'\0'前为姓名（第一个信息之后的信息）
+         *
+         *
+         *
+         */
+
+
     </script>
 </head>
-<body>
+<body class="backgraph">
     <form id="form1">
         <table border="0">
             <tr>
                 
                 <td>
                     <!--<input id="inputbox" name="name" type="text">-->
-                    <textarea placeholder="请输入您的家族树
+                    <textarea class="textbox" placeholder="请输入您的家族树
 格式：
 导师：张三
 2016级博士生：天一、王二、吴五
@@ -197,6 +188,7 @@
         </table>
     </form>
     <button onclick="Get_input(ptr_obj)">完成</button>
+
     <div id='html'>
         <script>
             var ptr_obj;                    //获取文本后修改ptr_obj并输出
